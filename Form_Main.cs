@@ -24,24 +24,29 @@ namespace Minesweeper
             nMineCnt = MineCnt;
         }
 
+        private bool Isn(int Width, int Height, int MineCnt)
+        {
+            return nWidth == Width && nHeight == Height && nMineCnt == MineCnt;
+        }
+
         private enum Level
         {
-            Beginner, Intermediatel, Expert, Setting
+            Beginner, Intermediate, Expert, Setting
         }
 
         private Level level
         {
             get
             {
-                if (nWidth == 10 && nHeight == 10 && nMineCnt == 10)
+                if (Isn(10, 10, 10))
                 {
                     return Level.Beginner;
                 }
-                else if (nWidth == 16 && nHeight == 16 && nMineCnt == 40)
+                else if (Isn(16, 16, 40))
                 {
-                    return Level.Intermediatel;
+                    return Level.Intermediate;
                 }
-                else if (nWidth == 30 && nHeight == 16 && nMineCnt == 99)
+                else if (Isn(30, 16, 99))
                 {
                     return Level.Expert;
                 }
@@ -54,7 +59,7 @@ namespace Minesweeper
                     case Level.Beginner:
                         Setn(10, 10, 10);
                         break;
-                    case Level.Intermediatel:
+                    case Level.Intermediate:
                         Setn(16, 16, 40);
                         break;
                     case Level.Expert:
@@ -63,35 +68,28 @@ namespace Minesweeper
                     case Level.Setting:
                         break;
                 }
-                UpdateSize();
-                UpdateLevelChecked();
             }
-
         }
 
-        private void UpdateSize()
+        private void UpdateGUI()
         {
             int nOffsetX = this.Width - this.ClientSize.Width;
             int nOffsetY = this.Height - this.ClientSize.Height;
             int nAdditionY = MenuStrip_Main.Height + TableLayoutPanel_Main.Height;
             this.Width = 12 + 34 * nWidth + nOffsetX;
             this.Height = 12 + 34 * nHeight + nAdditionY + nOffsetY;
-            SetNewGame();
-        }
 
-        private void UpdateLevelChecked()
-        {
-            beginnerBToolStripMenuItem.Checked =
-                   intermediateIToolStripMenuItem.Checked =
-                   expertEToolStripMenuItem.Checked =
-                   settingSToolStripMenuItem.Checked = false;
+            beginnerBToolStripMenuItem.Checked = false;
+            intermediateIToolStripMenuItem.Checked = false;
+            expertEToolStripMenuItem.Checked = false;
+            settingSToolStripMenuItem.Checked = false;
 
             switch (level)
             {
                 case Level.Beginner:
                     beginnerBToolStripMenuItem.Checked = true;
                     break;
-                case Level.Intermediatel:
+                case Level.Intermediate:
                     intermediateIToolStripMenuItem.Checked = true;
                     break;
                 case Level.Expert:
@@ -103,28 +101,6 @@ namespace Minesweeper
             }
         }
 
-        public void SetGame(int Width, int Height, int MineCnt)
-        {
-            Setn(Width, Height, MineCnt);
-            UpdateSize();
-            UpdateLevelChecked();
-        }
-
-        bool bMark;
-
-        private void SetMark(bool m)
-        {
-            markMToolStripMenuItem.Checked = bMark = m;
-        }
-
-        bool bAudio;
-
-        private void SetAudio(bool a)
-        {
-            audioMToolStripMenuItem.Checked = bAudio = a;
-            soundTick = soundTick ?? new System.Media.SoundPlayer(Properties.Resources.Ticking_clock_sound);
-        }
-
         System.Media.SoundPlayer soundTick;
         //System.Media.SoundPlayer soundBomb;
 
@@ -132,35 +108,19 @@ namespace Minesweeper
         {
             InitializeComponent();
             this.DoubleBuffered = true;
-            SetGame(Properties.Settings.Default.Width,
+            Setn(Properties.Settings.Default.Width,
                 Properties.Settings.Default.Height,
                 Properties.Settings.Default.MineCnt);
-            SetMark(Properties.Settings.Default.Mark);
-            SetAudio(Properties.Settings.Default.Audio);
-        }
-
-        private void SetGameBeginner()
-        {
-            level = Level.Beginner;
-        }
-
-        private void SetGameIntermediate()
-        {
-            level = Level.Intermediatel;
-        }
-
-        private void SetGameExpert()
-        {
-            level = Level.Expert;
+            markMToolStripMenuItem.Checked = Properties.Settings.Default.Mark;
+            audioMToolStripMenuItem.Checked = Properties.Settings.Default.Audio;
+            soundTick = new System.Media.SoundPlayer(Properties.Resources.Ticking_clock_sound);
+            UpdateGUI();
+            BeginNewGame();
         }
 
         private void Form_Main_Paint(object sender, PaintEventArgs e)
         {
-            PaintGame(e.Graphics);
-        }
-
-        private void PaintGame(Graphics g)
-        {
+            var g = e.Graphics;
             g.Clear(Color.White);
             int nOffsetX = 6;
             int nOffsetY = 6 + MenuStrip_Main.Height;
@@ -253,17 +213,17 @@ namespace Minesweeper
 
         private void beginnerBToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            SetGameBeginner();
+            level = Level.Beginner;
         }
 
         private void intermediateIToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            SetGameIntermediate();
+            level = Level.Intermediate;
         }
 
         private void expertEToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            SetGameExpert();
+            level = Level.Expert;
         }
 
         private void exitXToolStripMenuItem_Click(object sender, EventArgs e)
@@ -283,12 +243,12 @@ namespace Minesweeper
 
         private void markMToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            SetMark(!bMark);
+            markMToolStripMenuItem.Checked = !markMToolStripMenuItem.Checked;
         }
 
         private void audioMToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            SetAudio(!bAudio);
+            audioMToolStripMenuItem.Checked = !audioMToolStripMenuItem.Checked;
         }
 
         private void settingSToolStripMenuItem_Click(object sender, EventArgs e)
@@ -336,7 +296,7 @@ namespace Minesweeper
             }
         }
 
-        private void SetNewGame()
+        private void BeginNewGame()
         {
             pHasMine = new bool[nWidth, nHeight];
             pState = new State[nWidth, nHeight];
@@ -367,7 +327,7 @@ namespace Minesweeper
 
         private void newGameNToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            SetNewGame();
+            BeginNewGame();
         }
 
         Point MouseFocus;
@@ -391,7 +351,7 @@ namespace Minesweeper
 
         private void Timer_Main_Tick(object sender, EventArgs e)
         {
-            if (bAudio)
+            if (audioMToolStripMenuItem.Checked)
             {
                 soundTick.Play();
             }
@@ -453,7 +413,7 @@ namespace Minesweeper
                     }
                 }
             }
-            else if(bMouseRight && bMark)
+            else if(bMouseRight && markMToolStripMenuItem.Checked)
             {
                 UpdateState(ref pState[MouseFocus.X, MouseFocus.Y]);
             }
@@ -516,10 +476,12 @@ namespace Minesweeper
                 int y = sy + dy[i];
                 try
                 {
-                    if((pState[x, y] == State.None || pState[x, y] == State.Doubt) &&
-                        !pHasMine[x, y] && Around(pHasMine, x, y).Count(k => k) == 0)
+                    if((pState[x, y] == State.None || pState[x, y] == State.Doubt) && !pHasMine[x, y])
                     {
-                        dfs(x, y);
+                        if (Around(pHasMine, x, y).Count(k => k) == 0)
+                            dfs(x, y);
+                        else
+                            pState[x, y] = State.Open;
                     }
                 }
                 catch(IndexOutOfRangeException)
@@ -565,7 +527,7 @@ namespace Minesweeper
                     case Level.Beginner:
                         Properties.Settings.Default.Beginner = Math.Max(Properties.Settings.Default.Beginner, x);
                         break;
-                    case Level.Intermediatel:
+                    case Level.Intermediate:
                         Properties.Settings.Default.Intermediate = Math.Max(Properties.Settings.Default.Intermediate, x);
                         break;
                     case Level.Expert:

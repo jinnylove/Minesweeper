@@ -100,6 +100,11 @@ namespace Minesweeper
                     break;
             }
         }
+        public void SetGame(int Width, int Height, int MineCnt)
+        {
+            Setn(Width, Height, MineCnt);
+            BeginNewGame();
+        }
 
         System.Media.SoundPlayer soundTick;
         //System.Media.SoundPlayer soundBomb;
@@ -114,7 +119,7 @@ namespace Minesweeper
             markMToolStripMenuItem.Checked = Properties.Settings.Default.Mark;
             audioMToolStripMenuItem.Checked = Properties.Settings.Default.Audio;
             soundTick = new System.Media.SoundPlayer(Properties.Resources.Ticking_clock_sound);
-            UpdateGUI();
+            
             BeginNewGame();
         }
 
@@ -214,16 +219,19 @@ namespace Minesweeper
         private void beginnerBToolStripMenuItem_Click(object sender, EventArgs e)
         {
             level = Level.Beginner;
+            BeginNewGame();
         }
 
         private void intermediateIToolStripMenuItem_Click(object sender, EventArgs e)
         {
             level = Level.Intermediate;
+            BeginNewGame();
         }
 
         private void expertEToolStripMenuItem_Click(object sender, EventArgs e)
         {
             level = Level.Expert;
+            BeginNewGame();
         }
 
         private void exitXToolStripMenuItem_Click(object sender, EventArgs e)
@@ -298,6 +306,7 @@ namespace Minesweeper
 
         private void BeginNewGame()
         {
+            UpdateGUI();
             pHasMine = new bool[nWidth, nHeight];
             pState = new State[nWidth, nHeight];
 

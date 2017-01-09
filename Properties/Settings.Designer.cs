@@ -26,36 +26,36 @@ namespace Minesweeper.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("10")]
-        public int MineAreaRowCount {
+        public int RowCount {
             get {
-                return ((int)(this["MineAreaRowCount"]));
+                return ((int)(this["RowCount"]));
             }
             set {
-                this["MineAreaRowCount"] = value;
+                this["RowCount"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("10")]
-        public int MineAreaColumeCount {
+        public int ColumeCount {
             get {
-                return ((int)(this["MineAreaColumeCount"]));
+                return ((int)(this["ColumeCount"]));
             }
             set {
-                this["MineAreaColumeCount"] = value;
+                this["ColumeCount"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("10")]
-        public int MineAreaMineCnt {
+        public int MineCount {
             get {
-                return ((int)(this["MineAreaMineCnt"]));
+                return ((int)(this["MineCount"]));
             }
             set {
-                this["MineAreaMineCnt"] = value;
+                this["MineCount"] = value;
             }
         }
         

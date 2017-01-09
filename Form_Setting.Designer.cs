@@ -31,12 +31,12 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.NumericUpDown_Width = new System.Windows.Forms.NumericUpDown();
-            this.NumericUpDown_Height = new System.Windows.Forms.NumericUpDown();
+            this.NumericUpDown_Colume = new System.Windows.Forms.NumericUpDown();
+            this.NumericUpDown_Row = new System.Windows.Forms.NumericUpDown();
             this.NumericUpDown_Mine = new System.Windows.Forms.NumericUpDown();
             this.Button_OK = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.NumericUpDown_Width)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.NumericUpDown_Height)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NumericUpDown_Colume)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NumericUpDown_Row)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NumericUpDown_Mine)).BeginInit();
             this.SuspendLayout();
             // 
@@ -45,69 +45,69 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(82, 54);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(82, 24);
+            this.label1.Size = new System.Drawing.Size(178, 24);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Width:";
+            this.label1.Text = "Colume Count :";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(82, 137);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(94, 24);
+            this.label2.Size = new System.Drawing.Size(142, 24);
             this.label2.TabIndex = 1;
-            this.label2.Text = "Height:";
+            this.label2.Text = "Row Count :";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(82, 218);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(70, 24);
+            this.label3.Size = new System.Drawing.Size(154, 24);
             this.label3.TabIndex = 2;
-            this.label3.Text = "Mine:";
+            this.label3.Text = "Mine Count :";
             // 
-            // NumericUpDown_Width
+            // NumericUpDown_Colume
             // 
-            this.NumericUpDown_Width.Location = new System.Drawing.Point(271, 52);
-            this.NumericUpDown_Width.Maximum = new decimal(new int[] {
+            this.NumericUpDown_Colume.Location = new System.Drawing.Point(271, 52);
+            this.NumericUpDown_Colume.Maximum = new decimal(new int[] {
             30,
             0,
             0,
             0});
-            this.NumericUpDown_Width.Minimum = new decimal(new int[] {
+            this.NumericUpDown_Colume.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             0});
-            this.NumericUpDown_Width.Name = "NumericUpDown_Width";
-            this.NumericUpDown_Width.Size = new System.Drawing.Size(120, 35);
-            this.NumericUpDown_Width.TabIndex = 3;
-            this.NumericUpDown_Width.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.NumericUpDown_Width.Value = new decimal(new int[] {
+            this.NumericUpDown_Colume.Name = "NumericUpDown_Colume";
+            this.NumericUpDown_Colume.Size = new System.Drawing.Size(120, 35);
+            this.NumericUpDown_Colume.TabIndex = 3;
+            this.NumericUpDown_Colume.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.NumericUpDown_Colume.Value = new decimal(new int[] {
             1,
             0,
             0,
             0});
             // 
-            // NumericUpDown_Height
+            // NumericUpDown_Row
             // 
-            this.NumericUpDown_Height.Location = new System.Drawing.Point(271, 135);
-            this.NumericUpDown_Height.Maximum = new decimal(new int[] {
+            this.NumericUpDown_Row.Location = new System.Drawing.Point(271, 135);
+            this.NumericUpDown_Row.Maximum = new decimal(new int[] {
             16,
             0,
             0,
             0});
-            this.NumericUpDown_Height.Minimum = new decimal(new int[] {
+            this.NumericUpDown_Row.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             0});
-            this.NumericUpDown_Height.Name = "NumericUpDown_Height";
-            this.NumericUpDown_Height.Size = new System.Drawing.Size(120, 35);
-            this.NumericUpDown_Height.TabIndex = 4;
-            this.NumericUpDown_Height.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.NumericUpDown_Height.Value = new decimal(new int[] {
+            this.NumericUpDown_Row.Name = "NumericUpDown_Row";
+            this.NumericUpDown_Row.Size = new System.Drawing.Size(120, 35);
+            this.NumericUpDown_Row.TabIndex = 4;
+            this.NumericUpDown_Row.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.NumericUpDown_Row.Value = new decimal(new int[] {
             1,
             0,
             0,
@@ -153,8 +153,8 @@
             this.ClientSize = new System.Drawing.Size(465, 416);
             this.Controls.Add(this.Button_OK);
             this.Controls.Add(this.NumericUpDown_Mine);
-            this.Controls.Add(this.NumericUpDown_Height);
-            this.Controls.Add(this.NumericUpDown_Width);
+            this.Controls.Add(this.NumericUpDown_Row);
+            this.Controls.Add(this.NumericUpDown_Colume);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -164,8 +164,8 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Minesweeper";
             this.Load += new System.EventHandler(this.Form_Setting_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.NumericUpDown_Width)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.NumericUpDown_Height)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NumericUpDown_Colume)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NumericUpDown_Row)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NumericUpDown_Mine)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -177,8 +177,8 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.NumericUpDown NumericUpDown_Width;
-        private System.Windows.Forms.NumericUpDown NumericUpDown_Height;
+        private System.Windows.Forms.NumericUpDown NumericUpDown_Colume;
+        private System.Windows.Forms.NumericUpDown NumericUpDown_Row;
         private System.Windows.Forms.NumericUpDown NumericUpDown_Mine;
         private System.Windows.Forms.Button Button_OK;
     }

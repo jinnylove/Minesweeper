@@ -141,7 +141,7 @@ namespace Minesweeper
             GetToolStripMenuItem(game.GetLevel()).Checked = false;
             if (NewLevel == Level.Setting)
             {
-                game.SetLevel(Properties.Settings.Default.MineAreaRowCount, Properties.Settings.Default.MineAreaColumeCount, Properties.Settings.Default.MineAreaMineCnt);
+                game.SetLevel(Properties.Settings.Default.RowCount, Properties.Settings.Default.ColumeCount, Properties.Settings.Default.MineCount);
             }
             else
             {

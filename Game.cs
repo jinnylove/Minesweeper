@@ -12,8 +12,9 @@ namespace Minesweeper
     }
     internal class Game
     {
-        MineArea mineArea;
+        MineAreaDrawable mineArea;
         SoundPlayer TickSound;
+
         //SoundPlayer soundBomb;
         bool GameIsRunning;
         
@@ -28,8 +29,6 @@ namespace Minesweeper
 
         internal Game()
         {
-            
-            
             GameIsRunning = false;
         }
 
@@ -125,7 +124,7 @@ namespace Minesweeper
             switch (game.level)
             {
                 case Level.Beginner:
-                    Properties.Settings.HT6VR - XMPDJ - 2VBFV - R9PFY - 3VP7RDefault.Beginner = Math.Max(Properties.Settings.Default.Beginner, x);
+                    Properties.Settings.Default.Beginner = Math.Max(Properties.Settings.Default.Beginner, x);
                     break;
                 case Level.Intermediate:
                     Properties.Settings.Default.Intermediate = Math.Max(Properties.Settings.Default.Intermediate, x);

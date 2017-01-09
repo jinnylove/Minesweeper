@@ -4,13 +4,14 @@ using System.Windows.Forms;
 
 namespace Minesweeper
 {
+   
     internal class MineArea
     {
     
         public int RowCount { get; private set; }
         public int ColumeCount { get; private set; }
         public int MineCount { get; private set; }
-
+        internal MineArea() { }
         internal MineArea(int RowCount, int ColumeCount, int MineCount)
         {
             Set(RowCount, ColumeCount, MineCount);
@@ -69,91 +70,7 @@ namespace Minesweeper
         /**
          * About State
          */
-        class NodeArea
-        {
-            enum State
-            {
-                None = 0, Open, Flag, Doubt
-            }
-            State state;
-            void UpdateState(ref State s)
-            {
-                switch (s)
-                {
-                    case State.Open:
-                        s = State.Open;
-                        break;
-                    case State.None:
-                        s = State.Flag;
-                        break;
-                    case State.Flag:
-                        s = State.Doubt;
-                        break;
-                    case State.Doubt:
-                        s = State.None;
-                        break;
-                }
-            }
-            bool HasMine;
-            int AroundMineCount;
-            int OffsetX;
-            int OffsetY;
-
-            RectangleF rectangle;
-
-            static Font font = new Font("Consolas", 16);
-            static Brush[] brushs = new Brush[]
-            {
-                    null,
-                    new SolidBrush(Color.Blue),
-                    new SolidBrush(Color.Green),
-                    new SolidBrush(Color.Red),
-                    new SolidBrush(Color.DarkBlue),
-                    new SolidBrush(Color.DarkRed),
-                    new SolidBrush(Color.DarkSeaGreen),
-                    new SolidBrush(Color.Black),
-                    new SolidBrush(Color.DarkGray)
-            };
-
-            void DrawImage(Graphics g, Bitmap bp)
-            {
-                g.DrawImage(bp, OffsetX + 5, OffsetY + 5, 24, 24);
-            }
-
-            internal void PaintTo(Graphics g, bool HasFocus)
-            {
-                /**
-                 * not Open
-                 */
-                if (state != State.Open)
-                {
-                    g.FillRectangle(HasFocus ? new SolidBrush(Color.FromArgb(100, Color.SandyBrown)) : Brushes.SandyBrown, rectangle);
-
-                    switch (state)
-                    {
-                        case State.Flag: DrawImage(g, Properties.Resources.Flag); break;
-                        case State.Doubt: DrawImage(g, Properties.Resources.Doubt); break;
-                    }
-                }
-                /**
-                 * Open
-                 */
-                else
-                {
-                    g.FillRectangle(HasFocus ? new SolidBrush(Color.FromArgb(100, Color.LightGray)) : Brushes.LightGray, rectangle);
-
-                    if (HasMine)
-                    {
-                        DrawImage(g, Properties.Resources.Mine);
-                    }
-                    else if (AroundMineCount != 0)
-                    {
-                        SizeF Size = g.MeasureString(AroundMineCount.ToString(), font);
-                        g.DrawString(AroundMineCount.ToString(), font, brushs[AroundMineCount], rectangle);
-                    }
-                }
-            }
-        }
+        
 
         internal void OnMouseUp(MouseEventArgs e)
         {

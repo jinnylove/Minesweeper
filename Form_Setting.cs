@@ -12,14 +12,17 @@ namespace Minesweeper
 
         private void Form_Setting_Load(object sender, EventArgs e)
         {
-            NumericUpDown_Width.Value = Convert.ToDecimal(mineArea.RowCount);
-            NumericUpDown_Height.Value = Convert.ToDecimal(mineArea.ColumeCount);
-            NumericUpDown_Mine.Value = Convert.ToDecimal(mineArea.MineCount);
+            NumericUpDown_Row.Value = Properties.Settings.Default.RowCount;
+            NumericUpDown_Colume.Value = Properties.Settings.Default.ColumeCount;
+            NumericUpDown_Mine.Value = Properties.Settings.Default.MineCount;
         }
 
         private void Button_OK_Click(object sender, EventArgs e)
         {
-            mineArea.Set(Convert.ToInt32(NumericUpDown_Width.Value), Convert.ToInt32(NumericUpDown_Height.Value), Convert.ToInt32(NumericUpDown_Mine.Value));
+            Properties.Settings.Default.RowCount = Convert.ToInt32(NumericUpDown_Row.Value);
+            Properties.Settings.Default.ColumeCount = Convert.ToInt32(NumericUpDown_Colume.Value);
+            Properties.Settings.Default.MineCount = Convert.ToInt32(NumericUpDown_Mine.Value);
+            Properties.Settings.Default.Save();
             Close();
         }
     }

@@ -64,6 +64,9 @@
     <Compile Include="Form_Setting.Designer.cs">
       <DependentUpon>Form_Setting.cs</DependentUpon>
     </Compile>
+    <Compile Include="MineArea.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form_Main.resx">
@@ -102,9 +105,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Mine_Show.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\Timer.png" />
   </ItemGroup>
   <ItemGroup>
@@ -117,7 +117,10 @@
     <None Include="Resources\Mine.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Ticking-clock-sound.wav" />
+    <None Include="Resources\TickingClockSound.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Mine_Big.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

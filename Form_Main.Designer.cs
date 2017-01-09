@@ -233,7 +233,7 @@
             // 
             // PictureBox_Mine
             // 
-            this.PictureBox_Mine.BackgroundImage = global::Minesweeper.Properties.Resources.Mine_Show;
+            this.PictureBox_Mine.BackgroundImage = global::Minesweeper.Properties.Resources.Mine_Big;
             this.PictureBox_Mine.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.PictureBox_Mine.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PictureBox_Mine.Location = new System.Drawing.Point(35, 3);
@@ -289,10 +289,8 @@
             this.Text = "Minesweeper";
             this.Load += new System.EventHandler(this.Form_Main_Load);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.Form_Main_Paint);
-            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Form_Main_MouseDown);
             this.MouseLeave += new System.EventHandler(this.Form_Main_MouseLeave);
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Form_Main_MouseMove);
-            this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Form_Main_MouseUp);
             this.MenuStrip_Main.ResumeLayout(false);
             this.MenuStrip_Main.PerformLayout();
             this.TableLayoutPanel_Main.ResumeLayout(false);

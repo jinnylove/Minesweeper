@@ -93,9 +93,9 @@ namespace Minesweeper.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
-        internal static System.Drawing.Bitmap Mine_Show {
+        internal static System.Drawing.Bitmap Mine_Big {
             get {
-                object obj = ResourceManager.GetObject("Mine_Show", resourceCulture);
+                object obj = ResourceManager.GetObject("Mine_Big", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -103,9 +103,9 @@ namespace Minesweeper.Properties {
         /// <summary>
         ///   查找类似于 System.IO.MemoryStream 的 System.IO.UnmanagedMemoryStream 类型的本地化资源。
         /// </summary>
-        internal static System.IO.UnmanagedMemoryStream Ticking_clock_sound {
+        internal static System.IO.UnmanagedMemoryStream TickingClockSound {
             get {
-                return ResourceManager.GetStream("Ticking_clock_sound", resourceCulture);
+                return ResourceManager.GetStream("TickingClockSound", resourceCulture);
             }
         }
         

@@ -35,7 +35,6 @@
             this.NumericUpDown_Height = new System.Windows.Forms.NumericUpDown();
             this.NumericUpDown_Mine = new System.Windows.Forms.NumericUpDown();
             this.Button_OK = new System.Windows.Forms.Button();
-            this.Button_Cencal = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.NumericUpDown_Width)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NumericUpDown_Height)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NumericUpDown_Mine)).BeginInit();
@@ -139,7 +138,7 @@
             // 
             // Button_OK
             // 
-            this.Button_OK.Location = new System.Drawing.Point(86, 297);
+            this.Button_OK.Location = new System.Drawing.Point(178, 299);
             this.Button_OK.Name = "Button_OK";
             this.Button_OK.Size = new System.Drawing.Size(105, 43);
             this.Button_OK.TabIndex = 6;
@@ -147,22 +146,11 @@
             this.Button_OK.UseVisualStyleBackColor = true;
             this.Button_OK.Click += new System.EventHandler(this.Button_OK_Click);
             // 
-            // Button_Cencal
-            // 
-            this.Button_Cencal.Location = new System.Drawing.Point(271, 297);
-            this.Button_Cencal.Name = "Button_Cencal";
-            this.Button_Cencal.Size = new System.Drawing.Size(97, 43);
-            this.Button_Cencal.TabIndex = 7;
-            this.Button_Cencal.Text = "Cencal";
-            this.Button_Cencal.UseVisualStyleBackColor = true;
-            this.Button_Cencal.Click += new System.EventHandler(this.Button_Cencal_Click);
-            // 
             // Form_Setting
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(465, 416);
-            this.Controls.Add(this.Button_Cencal);
             this.Controls.Add(this.Button_OK);
             this.Controls.Add(this.NumericUpDown_Mine);
             this.Controls.Add(this.NumericUpDown_Height);
@@ -170,6 +158,8 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "Form_Setting";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Minesweeper";
@@ -191,6 +181,5 @@
         private System.Windows.Forms.NumericUpDown NumericUpDown_Height;
         private System.Windows.Forms.NumericUpDown NumericUpDown_Mine;
         private System.Windows.Forms.Button Button_OK;
-        private System.Windows.Forms.Button Button_Cencal;
     }
 }

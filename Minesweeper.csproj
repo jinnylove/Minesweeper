@@ -46,6 +46,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Util.cs" />
+    <Compile Include="MineAreaNode.cs" />
     <Compile Include="Form_Rank.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -64,9 +66,8 @@
     <Compile Include="Form_Setting.Designer.cs">
       <DependentUpon>Form_Setting.cs</DependentUpon>
     </Compile>
-    <Compile Include="MineArea.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="Game.cs" />
+    <Compile Include="MineArea.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form_Main.resx">

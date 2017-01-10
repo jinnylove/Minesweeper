@@ -12,7 +12,7 @@ namespace Minesweeper
     }
     internal class Game
     {
-        MineAreaDrawable mineArea;
+        MineArea mineArea;
         SoundPlayer TickSound;
 
         //SoundPlayer soundBomb;

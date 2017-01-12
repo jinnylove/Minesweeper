@@ -21,6 +21,9 @@ namespace Minesweeper
 
             game = new Game();
 
+            game.SetClock(new Clock(Timer_Main, Label_Timer));
+            game.SetMineC(new MineC(Label_Mine));
+
             markMToolStripMenuItem.Checked = Properties.Settings.Default.Mark;
             game.SetMarkable(markMToolStripMenuItem.Checked);
 
@@ -33,7 +36,7 @@ namespace Minesweeper
         /**
          * Begin Game on Load
          */
-        
+
         private void Form_Main_Load(object sender, EventArgs e)
         {
             BeginNewGame(Level.Setting);
@@ -42,16 +45,19 @@ namespace Minesweeper
         /**
          * Refresh
          */
-        
+
         private void Form_Main_Paint(object sender, PaintEventArgs e)
         {
             game.PaintTo(e);
         }
 
-        /**
-         * ToolStripMenuItem_Click
-         */
         
+    }
+    /**
+     * ToolStripMenuItem_Click
+     */
+    public partial class Form_Main : Form
+    {
         private void newGameNToolStripMenuItem_Click(object sender, EventArgs e)
         {
             BeginNewGame(Level.Setting);
@@ -97,7 +103,7 @@ namespace Minesweeper
 
         private void exitXToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if(MessageBox.Show("Are you sure to exit the game?", "Exit", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            if (MessageBox.Show("Are you sure to exit the game?", "Exit", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 Application.Exit();
             }
@@ -108,21 +114,23 @@ namespace Minesweeper
         private void aboutAToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ShellAbout(this.Handle, "Minesweeper", "A minesweeper game using CSharp language.", this.Icon.Handle);
-        }
-
-        /**
-         * Clock
-         */
-        
+        }  
+    }
+    /**
+     * Clock
+     */
+    public partial class Form_Main : Form
+    {
         private void Timer_Main_Tick(object sender, EventArgs e)
         {
             game.OnClockTick();
         }
-
-        /**
-         * Mouse
-         */
-        
+    }
+    /**
+     * Mouse
+     */
+    public partial class Form_Main : Form
+    {
         private void Form_Main_MouseMove(object sender, MouseEventArgs e)
         {
             Refresh();
@@ -130,12 +138,13 @@ namespace Minesweeper
         private void Form_Main_MouseLeave(object sender, EventArgs e)
         {
             Refresh();
-        }
-
-        /**
-         * Utils
-         */
-
+        }    
+    }
+    /**
+     * Utils
+     */
+    public partial class Form_Main : Form
+    {
         private void BeginNewGame(Level NewLevel)
         {
             GetToolStripMenuItem(game.GetLevel()).Checked = false;
@@ -163,7 +172,7 @@ namespace Minesweeper
 
         private ToolStripMenuItem GetToolStripMenuItem(Level level)
         {
-            switch(level)
+            switch (level)
             {
                 case Level.Beginner:
                     return beginnerBToolStripMenuItem;

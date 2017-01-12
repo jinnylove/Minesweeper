@@ -6,15 +6,48 @@ using System.Windows.Forms;
 
 namespace Minesweeper
 {
-    internal enum Level
+    internal class MineAreaNode
     {
-        Beginner, Intermediate, Expert, Setting
+        public State state;
+        public bool HasMine;
+        public int AroundMineCount;
+    }
+    internal class MineArea
+    {
+
+        internal int RowCount;
+        internal int ColumeCount;
+        internal int MineCount;
+        internal MineArea() { }
+        internal MineArea(int RowCount, int ColumeCount, int MineCount)
+        {
+            Set(RowCount, ColumeCount, MineCount);
+        }
+
+        internal void Set(int RowCount, int ColumeCount, int MineCount)
+        {
+            this.RowCount = RowCount;
+            this.ColumeCount = ColumeCount;
+            this.MineCount = MineCount;
+        }
+
+        internal bool Is(int RowCount, int ColumeCount, int MineCount)
+        {
+            return this.RowCount == RowCount
+                && this.ColumeCount == ColumeCount
+                && this.MineCount == MineCount;
+        }
     }
     internal class Game
     {
         MineArea mineArea;
         SoundPlayer TickSound;
+        Rank rank;
+        Clock clock;
+        MineC mineC;
 
+        bool Audioable;
+        bool Markable;
         //SoundPlayer soundBomb;
         bool GameIsRunning;
         
@@ -45,7 +78,17 @@ namespace Minesweeper
 
         internal Level GetLevel()
         {
-            throw new NotImplementedException();
+            return mineArea.GetLevel();
+        }
+        
+        internal void SetClock(Clock c)
+        {
+            clock = c;
+        }
+
+        internal void SetMineC(MineC x)
+        {
+            mineC = x;
         }
 
         internal void SetLevel(Level beginner)
@@ -60,80 +103,49 @@ namespace Minesweeper
 
         internal void BeginNewGame()
         {
-
-            mineArea.clear();
-
-            Label_Mine.Text = mineArea.MineCount.ToString();
-            Label_Timer.Text = "0";
-            Timer_Main.Enabled = true;
+            mineC.MineCount = mineArea.MineCount;
+            clock.ReStart();
             GameIsRunning = true;
         }
 
-        internal void UpdateMarkable(bool @checked)
-        {
-            throw new NotImplementedException();
-        }
-
+        
         internal void SetAudioable(bool @checked)
         {
-            throw new NotImplementedException();
+            Audioable = @checked;
         }
 
         internal void UpdateAudioable(bool @checked)
         {
-            throw new NotImplementedException();
+            Audioable = @checked;
         }
 
         internal void SetMarkable(bool @checked)
         {
-            throw new NotImplementedException();
+            Markable = @checked;
+        }
+        internal void UpdateMarkable(bool @checked)
+        {
+            Markable = @checked;
         }
 
-        private void End()
+        private void Stop()
         {
-            Timer_Main.Enabled = false;
+            clock.Stop();
             GameIsRunning = false;
         }
-        private void CheckWin()
-        {
-            return;
 
-            // GameEnd();
-            // ShowWinMessageBox();
-            // UpdateRank();
-
-        }
         private void ShowWinMessageBox()
         {
-            MessageBox.Show(String.Format("YOU WIN! cost {0} second.", Label_Timer.Text), "MessageBox", MessageBoxButtons.OK);
+            MessageBox.Show(String.Format("YOU WIN! cost {0} second.", clock.Time), "MessageBox", MessageBoxButtons.OK);
         }
 
         internal void OnClockTick()
         {
-            if (audioMToolStripMenuItem.Checked)
+            if (Audioable)
             {
                 TickSound.Play();
             }
-            Label_Timer.Text = Convert.ToString(Convert.ToInt32(Label_Timer.Text) + 1);
-            throw new NotImplementedException();
-        }
-
-        private void UpdateRank()
-        {
-            int x = (int)Math.Floor(10000.0 / Convert.ToDouble(Form_Main.Label_Timer.Text));
-            switch (game.level)
-            {
-                case Level.Beginner:
-                    Properties.Settings.Default.Beginner = Math.Max(Properties.Settings.Default.Beginner, x);
-                    break;
-                case Level.Intermediate:
-                    Properties.Settings.Default.Intermediate = Math.Max(Properties.Settings.Default.Intermediate, x);
-                    break;
-                case Level.Expert:
-                    Properties.Settings.Default.Expert = Math.Max(Properties.Settings.Default.Expert, x);
-                    break;
-            }
-            Properties.Settings.Default.Save();
+            clock.Time++;
         }
     }
 }

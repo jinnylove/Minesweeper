@@ -10,7 +10,7 @@ namespace Minesweeper
         {
             InitializeComponent();
             DoubleBuffered = true;
-            game = new Game();
+            game = new Game(100,100,100);
         }
 
         private void Form_Main_Paint(object sender, PaintEventArgs e)

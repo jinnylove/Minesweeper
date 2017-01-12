@@ -20,18 +20,21 @@ namespace Minesweeper
         };
         static void DrawImage(Graphics g, Bitmap bp)
         {
-            g.DrawImage(bp, OffsetX + 5, OffsetY + 5, 24, 24);
+           // g.DrawImage(bp, OffsetX + 5, OffsetY + 5, 24, 24);
         }
-        static void PaintTo(this MineArea mineArea, PaintEventArgs e)
+        internal static void PaintTo(this Game game, PaintEventArgs e)
         { }
-        static void PaintTo(this MineAreaNode mineAreaNode, PaintEventArgs e, bool HasFocus)
+        internal static void PaintTo(this MineArea mineArea, PaintEventArgs e)
+        { }
+        internal static void PaintTo(this MineAreaNode mineAreaNode, PaintEventArgs e, bool HasFocus)
         {
+            Graphics g = e.Graphics;
             /**
              * not Open
              */
             if (mineAreaNode.state != State.Open)
             {
-                g.FillRectangle(HasFocus ? new SolidBrush(Color.FromArgb(100, Color.SandyBrown)) : Brushes.SandyBrown, rectangle);
+                g.FillRectangle(HasFocus ? new SolidBrush(Color.FromArgb(100, Color.SandyBrown)) : Brushes.SandyBrown, mineAreaNode.g);
 
                 switch (mineAreaNode.state)
                 {
@@ -44,7 +47,7 @@ namespace Minesweeper
              */
             else
             {
-                g.FillRectangle(HasFocus ? new SolidBrush(Color.FromArgb(100, Color.LightGray)) : Brushes.LightGray, rectangle);
+                g.FillRectangle(HasFocus ? new SolidBrush(Color.FromArgb(100, Color.LightGray)) : Brushes.LightGray, mineAreaNode.g);
 
                 if (mineAreaNode.HasMine)
                 {
@@ -52,13 +55,12 @@ namespace Minesweeper
                 }
                 else if (mineAreaNode.AroundMineCount != 0)
                 {
-                    SizeF Size = g.MeasureString(AroundMineCount.ToString(), font);
-                    g.DrawString(AroundMineCount.ToString(), font, brushs[AroundMineCount], rectangle);
+                    SizeF Size = g.MeasureString(mineAreaNode.AroundMineCount.ToString(), font);
+                    g.DrawString(mineAreaNode.AroundMineCount.ToString(), font, brushs[mineAreaNode.AroundMineCount], mineAreaNode.g);
                 }
             }
         }
-        static void PaintTo(this Game game, PaintEventArgs e)
-        { }
+       
 
     }
 }

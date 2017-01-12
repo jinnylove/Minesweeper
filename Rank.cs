@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Minesweeper
 {
@@ -12,7 +8,7 @@ namespace Minesweeper
     }
     static class RankUtil
     {
-        static void Update(this Rank rank, Level level, int time)
+        internal static void Update(this Rank rank, Level level, int time)
         {
             int x = (int)Math.Floor(10000.0 / time);
             switch (level)

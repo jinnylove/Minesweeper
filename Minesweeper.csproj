@@ -46,8 +46,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Clock.cs" />
+    <Compile Include="Level.cs" />
+    <Compile Include="MineC.cs" />
+    <Compile Include="Paint.cs" />
+    <Compile Include="Rank.cs" />
+    <Compile Include="State.cs" />
     <Compile Include="Util.cs" />
-    <Compile Include="MineAreaNode.cs" />
     <Compile Include="Form_Rank.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -67,7 +72,6 @@
       <DependentUpon>Form_Setting.cs</DependentUpon>
     </Compile>
     <Compile Include="Game.cs" />
-    <Compile Include="MineArea.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form_Main.resx">

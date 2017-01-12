@@ -12,36 +12,21 @@ namespace Minesweeper
     }
     static class LevelUtil
     {
-        internal static void SetLevel(this MineArea mineArea, Level NewLevel)
+        internal static void SetLevel(this Game game, Level NewLevel)
         {
+            game.level = NewLevel;
             switch (NewLevel)
             {
                 case Level.Beginner:
-                    mineArea.Set(10, 10, 10);
+                    game.SetLevel(10, 10, 10);
                     break;
                 case Level.Intermediate:
-                    mineArea.Set(16, 16, 40);
+                    game.SetLevel(16, 16, 40);
                     break;
                 case Level.Expert:
-                    mineArea.Set(30, 16, 99);
+                    game.SetLevel(30, 16, 99);
                     break;
             }
-        }
-        internal static Level GetLevel(this MineArea mineArea)
-        {
-            if (mineArea.Is(10, 10, 10))
-            {
-                return Level.Beginner;
-            }
-            else if (mineArea.Is(16, 16, 40))
-            {
-                return Level.Intermediate;
-            }
-            else if (mineArea.Is(30, 16, 99))
-            {
-                return Level.Expert;
-            }
-            return Level.Setting;
         }
     }
 }

@@ -6,7 +6,7 @@
     }
     static class StateUtil
     {
-        static State NextState(this State s)
+        internal static State NextState(this State s)
         {
             switch (s)
             {

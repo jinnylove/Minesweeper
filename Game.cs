@@ -11,31 +11,31 @@ namespace Minesweeper
         public State state;
         public bool HasMine;
         public int AroundMineCount;
+        internal RectangleF g;
     }
     internal class MineArea
     {
-
-        internal int RowCount;
-        internal int ColumeCount;
-        internal int MineCount;
-        internal MineArea() { }
+        internal MineAreaNode[,] mineAreaNodes;
         internal MineArea(int RowCount, int ColumeCount, int MineCount)
         {
-            Set(RowCount, ColumeCount, MineCount);
-        }
-
-        internal void Set(int RowCount, int ColumeCount, int MineCount)
-        {
-            this.RowCount = RowCount;
-            this.ColumeCount = ColumeCount;
-            this.MineCount = MineCount;
-        }
-
-        internal bool Is(int RowCount, int ColumeCount, int MineCount)
-        {
-            return this.RowCount == RowCount
-                && this.ColumeCount == ColumeCount
-                && this.MineCount == MineCount;
+            mineAreaNodes = new MineAreaNode[RowCount, ColumeCount];
+            
+            foreach(MineAreaNode n in mineAreaNodes)
+            {
+                n.state = State.None;
+                n.HasMine = false;
+                n.AroundMineCount = 0;
+            }
+            Random random = new Random();
+            while(MineCount != 0)
+            {
+                int row = random.Next(RowCount);
+                int colume = random.Next(ColumeCount);
+                if (mineAreaNodes[row, colume].HasMine)
+                    continue;
+                mineAreaNodes[row, colume].HasMine = true;
+                MineCount--;
+            }
         }
     }
     internal class Game
@@ -45,6 +45,7 @@ namespace Minesweeper
         Rank rank;
         Clock clock;
         MineC mineC;
+        internal Level level;
 
         bool Audioable;
         bool Markable;
@@ -65,20 +66,15 @@ namespace Minesweeper
             GameIsRunning = false;
         }
 
-        internal void SetLevel(int mineAreaRowCount, int mineAreaColumeCount, int mineAreaMineCnt)
+        internal void SetLevel(int mineAreaRowCount, int mineAreaColumeCount, int mineAreaMineCount)
         {
-            mineArea = new MineArea(RowCount, ColumeCount, MineCount);
-            throw new NotImplementedException();
+            mineArea = new MineArea(mineAreaRowCount, mineAreaColumeCount, mineAreaMineCount);
+            mineC.MineCount = mineAreaMineCount;
         }
 
         internal void SetTickClockSound(UnmanagedMemoryStream tickingClockSound)
         {
             TickSound = new SoundPlayer(tickingClockSound);
-        }
-
-        internal Level GetLevel()
-        {
-            return mineArea.GetLevel();
         }
         
         internal void SetClock(Clock c)
@@ -91,19 +87,9 @@ namespace Minesweeper
             mineC = x;
         }
 
-        internal void SetLevel(Level beginner)
-        {
-            throw new NotImplementedException();
-        }
-
-        internal void PaintTo(PaintEventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
         internal void BeginNewGame()
         {
-            mineC.MineCount = mineArea.MineCount;
+            mineC.MineCount = 100;
             clock.ReStart();
             GameIsRunning = true;
         }

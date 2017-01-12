@@ -51,13 +51,10 @@ namespace Minesweeper
             game.PaintTo(e);
         }
 
-        
-    }
-    /**
-     * ToolStripMenuItem_Click
-     */
-    public partial class Form_Main : Form
-    {
+        /**
+         * ToolStripMenuItem_Click
+         */
+   
         private void newGameNToolStripMenuItem_Click(object sender, EventArgs e)
         {
             BeginNewGame(Level.Setting);
@@ -115,22 +112,20 @@ namespace Minesweeper
         {
             ShellAbout(this.Handle, "Minesweeper", "A minesweeper game using CSharp language.", this.Icon.Handle);
         }  
-    }
-    /**
-     * Clock
-     */
-    public partial class Form_Main : Form
-    {
+    
+        /**
+         * Clock
+         */
+    
         private void Timer_Main_Tick(object sender, EventArgs e)
         {
             game.OnClockTick();
         }
-    }
-    /**
-     * Mouse
-     */
-    public partial class Form_Main : Form
-    {
+    
+        /**
+         * Mouse
+         */
+    
         private void Form_Main_MouseMove(object sender, MouseEventArgs e)
         {
             Refresh();
@@ -139,15 +134,14 @@ namespace Minesweeper
         {
             Refresh();
         }    
-    }
-    /**
-     * Utils
-     */
-    public partial class Form_Main : Form
-    {
+    
+        /**
+         * Utils
+         */
+    
         private void BeginNewGame(Level NewLevel)
         {
-            GetToolStripMenuItem(game.GetLevel()).Checked = false;
+            GetToolStripMenuItem(game.level).Checked = false;
             if (NewLevel == Level.Setting)
             {
                 game.SetLevel(Properties.Settings.Default.RowCount, Properties.Settings.Default.ColumeCount, Properties.Settings.Default.MineCount);
@@ -156,7 +150,7 @@ namespace Minesweeper
             {
                 game.SetLevel(NewLevel);
             }
-            GetToolStripMenuItem(game.GetLevel()).Checked = true;
+            GetToolStripMenuItem(game.level).Checked = true;
 
             UpdateClientSize();
             game.BeginNewGame();

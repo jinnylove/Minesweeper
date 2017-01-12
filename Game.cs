@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Drawing;
-using System.IO;
-using System.Media;
-using System.Windows.Forms;
 
 namespace Minesweeper
 {
@@ -41,15 +38,6 @@ namespace Minesweeper
     internal class Game
     {
         MineArea mineArea;
-        SoundPlayer TickSound;
-        Rank rank;
-        Clock clock;
-        MineC mineC;
-        internal Level level;
-
-        bool Audioable;
-        bool Markable;
-        //SoundPlayer soundBomb;
         bool GameIsRunning;
         
         internal Size MineAreaSize
@@ -60,78 +48,5 @@ namespace Minesweeper
             }
         }
 
-
-        internal Game()
-        {
-            GameIsRunning = false;
-        }
-
-        internal void SetLevel(int mineAreaRowCount, int mineAreaColumeCount, int mineAreaMineCount)
-        {
-            mineArea = new MineArea(mineAreaRowCount, mineAreaColumeCount, mineAreaMineCount);
-            mineC.MineCount = mineAreaMineCount;
-        }
-
-        internal void SetTickClockSound(UnmanagedMemoryStream tickingClockSound)
-        {
-            TickSound = new SoundPlayer(tickingClockSound);
-        }
-        
-        internal void SetClock(Clock c)
-        {
-            clock = c;
-        }
-
-        internal void SetMineC(MineC x)
-        {
-            mineC = x;
-        }
-
-        internal void BeginNewGame()
-        {
-            mineC.MineCount = 100;
-            clock.ReStart();
-            GameIsRunning = true;
-        }
-
-        
-        internal void SetAudioable(bool @checked)
-        {
-            Audioable = @checked;
-        }
-
-        internal void UpdateAudioable(bool @checked)
-        {
-            Audioable = @checked;
-        }
-
-        internal void SetMarkable(bool @checked)
-        {
-            Markable = @checked;
-        }
-        internal void UpdateMarkable(bool @checked)
-        {
-            Markable = @checked;
-        }
-
-        private void Stop()
-        {
-            clock.Stop();
-            GameIsRunning = false;
-        }
-
-        private void ShowWinMessageBox()
-        {
-            MessageBox.Show(String.Format("YOU WIN! cost {0} second.", clock.Time), "MessageBox", MessageBoxButtons.OK);
-        }
-
-        internal void OnClockTick()
-        {
-            if (Audioable)
-            {
-                TickSound.Play();
-            }
-            clock.Time++;
-        }
     }
 }

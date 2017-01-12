@@ -18,10 +18,7 @@ namespace Minesweeper
                     new SolidBrush(Color.Black),
                     new SolidBrush(Color.DarkGray)
         };
-        static void DrawImage(Graphics g, Bitmap bp)
-        {
-           // g.DrawImage(bp, OffsetX + 5, OffsetY + 5, 24, 24);
-        }
+
         internal static void PaintTo(this Game game, PaintEventArgs e)
         { }
         internal static void PaintTo(this MineArea mineArea, PaintEventArgs e)
@@ -36,11 +33,7 @@ namespace Minesweeper
             {
                 g.FillRectangle(HasFocus ? new SolidBrush(Color.FromArgb(100, Color.SandyBrown)) : Brushes.SandyBrown, mineAreaNode.g);
 
-                switch (mineAreaNode.state)
-                {
-                    case State.Flag: DrawImage(g, Properties.Resources.Flag); break;
-                    case State.Doubt: DrawImage(g, Properties.Resources.Doubt); break;
-                }
+
             }
             /**
              * Open
@@ -49,11 +42,8 @@ namespace Minesweeper
             {
                 g.FillRectangle(HasFocus ? new SolidBrush(Color.FromArgb(100, Color.LightGray)) : Brushes.LightGray, mineAreaNode.g);
 
-                if (mineAreaNode.HasMine)
-                {
-                    DrawImage(g, Properties.Resources.Mine);
-                }
-                else if (mineAreaNode.AroundMineCount != 0)
+   
+                //else if (mineAreaNode.AroundMineCount != 0)
                 {
                     SizeF Size = g.MeasureString(mineAreaNode.AroundMineCount.ToString(), font);
                     g.DrawString(mineAreaNode.AroundMineCount.ToString(), font, brushs[mineAreaNode.AroundMineCount], mineAreaNode.g);

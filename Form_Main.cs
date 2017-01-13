@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using System.Drawing;
+using System.Windows.Forms;
 
 namespace Minesweeper
 {
@@ -9,13 +10,26 @@ namespace Minesweeper
         public Form_Main()
         {
             InitializeComponent();
-            DoubleBuffered = true;
-            game = new Game(100,100,100);
+            //DoubleBuffered = true;
+            game = new Game();
+        }
+
+        private void Form_Main_Paint()
+        {
+            Graphics g = CreateGraphics();
+            game.PaintTo(g);
+            g.Dispose();
+        }
+
+        private void Form_Main_MouseUp(object sender, MouseEventArgs e)
+        {
+            game.OnMouseClick(e);
+            Form_Main_Paint();
         }
 
         private void Form_Main_Paint(object sender, PaintEventArgs e)
         {
-            game.PaintTo(e);
+            Form_Main_Paint();
         }
     }
 }

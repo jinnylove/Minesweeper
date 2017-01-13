@@ -82,7 +82,7 @@ namespace Minesweeper
             Node[,] p; 
             n.parent.TryGetTarget(out p);
             return n.location.X != 0 && n.location.Y != 0 &&
-            n.location.X != p.GetLength(0) && n.location.Y != p.GetLength(1);
+            n.location.X != p.GetLength(1) && n.location.Y != p.GetLength(0);
         };
     }
     class RectangleNode : Node
@@ -170,6 +170,17 @@ namespace Minesweeper
                 return a.ToArray();
             }
         }
+        public static new Func<Node, bool> DEFAULT_FILTER = (Node n) =>
+        {
+            if (Node.DEFAULT_FILTER(n) == false)
+                return false;
+            Node[,] p;
+            n.parent.TryGetTarget(out p);
+            int row = p.GetLength(1) - 2;
+            int colume = p.GetLength(0) - 2;
+            int y = n.location.X/2 + 1;
+            return n.location.Y >= n.location.X/2 + 1;
+        };
     }
 
 
@@ -178,18 +189,17 @@ namespace Minesweeper
         public Node[,] nodes;
         public Queue<Node> updateNodes = new Queue<Node>();
 
-        public Game() :this(100,100,100) { }
+        public Game() :this(10,10,10) { }
 
         public Game(int rowCnt, int columeCnt, int mineCnt)
         {
             nodes = new Node[rowCnt + 2, columeCnt + 2];
-
-            foreach (int i in Enumerable.Range(0, nodes.GetLength(0)))
+            foreach (int i in Enumerable.Range(0, nodes.GetLength(1)))
             {
-                foreach (int j in Enumerable.Range(0, nodes.GetLength(1)))
+                foreach (int j in Enumerable.Range(0, nodes.GetLength(0)))
                 {
                     nodes[i, j] = new SixNode(nodes, i, j);
-                    if (Node.DEFAULT_FILTER(nodes[i, j]))
+                    if (SixNode.DEFAULT_FILTER(nodes[i, j]))
                     {
                         updateNodes.Enqueue(nodes[i, j]);
                     }

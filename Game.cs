@@ -43,11 +43,20 @@ namespace Minesweeper
 
         public Node(Node[,] p, int row, int colume)
         {
-            parent = new WeakReference<Node[,]>(p);
+            parentBox = new WeakReference<Node[,]>(p);
             location = new Point(row, colume);
         }
 
-        public WeakReference<Node[,]> parent;
+        private WeakReference<Node[,]> parentBox;
+        public Node[,] parent
+        {
+            get
+            {
+                Node[,] p;
+                parentBox.TryGetTarget(out p);
+                return p;
+            }
+        }
         public Point location;
         public bool hasMine = false;
 
@@ -65,10 +74,8 @@ namespace Minesweeper
         {
             get
             {
-                Node[,] ns;
-                parent.TryGetTarget(out ns);
                 var a = from p in aroundLocation
-                        select ns[p.X + location.X, p.Y + location.Y];
+                        select parent[p.X + location.X, p.Y + location.Y];
                 return a.ToArray();
             }
         }
@@ -78,12 +85,14 @@ namespace Minesweeper
         public static float WIDTH = 30F;
         public static float SUBWIDTH = 1F / 12;
         public static PointF OFFSET = new PointF(2 * SUBWIDTH, 2 * SUBWIDTH);
-        public static Func<Node, bool> DEFAULT_FILTER = (Node n) => {
-            Node[,] p; 
-            n.parent.TryGetTarget(out p);
-            return n.location.X != 0 && n.location.Y != 0 &&
-            n.location.X != p.GetLength(1) && n.location.Y != p.GetLength(0);
-        };
+        public bool right
+        {
+            get
+            {
+                return location.X != 0 && location.Y != 0 &&
+                location.X != parent.GetLength(1) && location.Y != parent.GetLength(0);
+            }
+        }
     }
     class RectangleNode : Node
     {
@@ -120,17 +129,9 @@ namespace Minesweeper
             new PointF(WIDTH, 0F)
         };
 
-        public RectangleNode(Node[,] p, int row, int colume) : base(p, row, colume)
-        {
-        }
+        public RectangleNode(Node[,] p, int row, int colume) : base(p, row, colume) { }
 
-        public override Point[] aroundLocation
-        {
-            get
-            {
-                return AroundLocation;
-            }
-        }
+        public override Point[] aroundLocation { get { return AroundLocation; } }
 
 
     }
@@ -161,7 +162,7 @@ namespace Minesweeper
         {
             get
             {
-                var x = (location.X - location.Y / 2F - 1/2F) * WIDTH * ((float)Math.Sqrt(3) * (1 + SUBWIDTH)) + (float)Math.Sqrt(3) / 2F * WIDTH;
+                var x = (location.X - location.Y / 2F - 1 / 2F) * WIDTH * ((float)Math.Sqrt(3) * (1 + SUBWIDTH)) + (float)Math.Sqrt(3) / 2F * WIDTH;
                 var y = (location.Y - 1) * WIDTH * (1.5F + SUBWIDTH);
 
                 var a = from p in dSix
@@ -170,17 +171,19 @@ namespace Minesweeper
                 return a.ToArray();
             }
         }
-        public static new Func<Node, bool> DEFAULT_FILTER = (Node n) =>
+        public new bool right
         {
-            if (Node.DEFAULT_FILTER(n) == false)
-                return false;
-            Node[,] p;
-            n.parent.TryGetTarget(out p);
-            int row = p.GetLength(1) - 2;
-            int colume = p.GetLength(0) - 2;
-            int y = n.location.X/2 + 1;
-            return n.location.Y >= n.location.X/2 + 1;
-        };
+            get
+            {
+                if (base.right == false)
+                    return false;
+
+                int row = parent.GetLength(1) - 2;
+                int colume = parent.GetLength(0) - 2;
+                int y = location.X / 2 + 1;
+                return location.Y >= location.X / 2 + 1;
+            }
+        }
     }
 
 
@@ -189,7 +192,7 @@ namespace Minesweeper
         public Node[,] nodes;
         public Queue<Node> updateNodes = new Queue<Node>();
 
-        public Game() :this(10,10,10) { }
+        public Game() : this(10, 10, 10) { }
 
         public Game(int rowCnt, int columeCnt, int mineCnt)
         {
@@ -199,7 +202,7 @@ namespace Minesweeper
                 foreach (int j in Enumerable.Range(0, nodes.GetLength(0)))
                 {
                     nodes[i, j] = new SixNode(nodes, i, j);
-                    if (SixNode.DEFAULT_FILTER(nodes[i, j]))
+                    if (nodes[i, j].right)
                     {
                         updateNodes.Enqueue(nodes[i, j]);
                     }
@@ -217,17 +220,17 @@ namespace Minesweeper
                 mineCnt--;
             }
         }
-        
+
         public void Open(Node n)
         {
-            n.state = State.Open;    
+            n.state = State.Open;
         }
 
         internal void OnMouseClick(MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {
-                
+
             }
         }
         public void PaintTo(Graphics g)
@@ -248,7 +251,7 @@ namespace Minesweeper
     }
     static class PaintUtil
     {
-        
+
         static Font font = new Font("Consolas", 16);
         static Brush[] brushs = new Brush[]
         {

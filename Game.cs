@@ -93,6 +93,33 @@ namespace Minesweeper
                 location.X != parent.GetLength(1) && location.Y != parent.GetLength(0);
             }
         }
+        public static PointF nwGet(Node[,] arr)
+        {
+            float minX = 1e38F, minY = 1e38F, maxX = -1e38F, maxY = -1e38F;
+            foreach (Node node in arr)
+            {
+                foreach (PointF point in node.figure)
+                {
+                    if (point.X < minX)
+                    {
+                        minX = point.X;
+                    }
+                    if (point.Y < minY)
+                    {
+                        minY = point.Y;
+                    }
+                    if (point.X > maxX)
+                    {
+                        maxX = point.X;
+                    }
+                    if (point.Y > maxY)
+                    {
+                        maxY = point.Y;
+                    }
+                }
+            }
+            return new PointF(maxX - minX, maxY - minY);
+        }
     }
     class RectangleNode : Node
     {
@@ -100,8 +127,8 @@ namespace Minesweeper
         {
             get
             {
-                var x = (location.X - 1) * WIDTH * (1 + SUBWIDTH);
-                var y = (location.Y - 1) * WIDTH * (1 + SUBWIDTH);
+                var x = (location.Y - 1) * WIDTH * (1 + SUBWIDTH);
+                var y = (location.X - 1) * WIDTH * (1 + SUBWIDTH);
                 var a = from p in dRect
                         select new PointF(p.X + x + OFFSET.X, p.Y + y + OFFSET.Y);
 
@@ -141,9 +168,20 @@ namespace Minesweeper
         {
             get
             {
-                throw new NotImplementedException();
+                return AroundLocation;
             }
         }
+
+        private static Point[] AroundLocation = new Point[]
+        {
+            new Point(-1, -1),
+            new Point(-1, 0),
+            new Point(0, -1),
+            new Point(0, 1),
+            new Point(1, 0),
+            new Point(1, 1)
+        };
+
         static PointF[] dSix = new PointF[]
         {
             new PointF(0F, 0F),
@@ -162,8 +200,8 @@ namespace Minesweeper
         {
             get
             {
-                var x = (location.X - location.Y / 2F - 1 / 2F) * WIDTH * ((float)Math.Sqrt(3) * (1 + SUBWIDTH)) + (float)Math.Sqrt(3) / 2F * WIDTH;
-                var y = (location.Y - 1) * WIDTH * (1.5F + SUBWIDTH);
+                var x = (location.Y - location.X / 2F - 1 / 2F) * WIDTH * ((float)Math.Sqrt(3) * (1 + SUBWIDTH)) + (float)Math.Sqrt(3) / 2F * WIDTH;
+                var y = (location.X - 1) * WIDTH * (1.5F + SUBWIDTH);
 
                 var a = from p in dSix
                         select new PointF(p.X + x + OFFSET.X, p.Y + y + OFFSET.Y);
@@ -178,10 +216,9 @@ namespace Minesweeper
                 if (base.right == false)
                     return false;
 
-                int row = parent.GetLength(1) - 2;
-                int colume = parent.GetLength(0) - 2;
-                int y = location.X / 2 + 1;
-                return location.Y >= location.X / 2 + 1;
+                int row = parent.GetLength(0) - 2;
+                int colume = parent.GetLength(1) - 2;
+                return location.Y >= location.X / 2 + 1 && location.Y <= (colume - row / 2) + location.X / 2;
             }
         }
     }
@@ -197,9 +234,9 @@ namespace Minesweeper
         public Game(int rowCnt, int columeCnt, int mineCnt)
         {
             nodes = new Node[rowCnt + 2, columeCnt + 2];
-            foreach (int i in Enumerable.Range(0, nodes.GetLength(1)))
+            foreach (int i in Enumerable.Range(0, nodes.GetLength(0) - 1))
             {
-                foreach (int j in Enumerable.Range(0, nodes.GetLength(0)))
+                foreach (int j in Enumerable.Range(0, nodes.GetLength(1) - 1))
                 {
                     nodes[i, j] = new SixNode(nodes, i, j);
                     if (nodes[i, j].right)

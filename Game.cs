@@ -70,6 +70,14 @@ namespace Minesweeper
 
         public abstract PointF[] figure { get; }
 
+        public PointF center
+        {
+            get
+            {
+                return new PointF(figure.Sum(p => p.X)/figure.Length, figure.Sum(p=>p.Y)/figure.Length);
+            }
+        }
+
         public AbstractNode[] around
         {
             get
@@ -117,9 +125,9 @@ namespace Minesweeper
 
         internal void OnPaint(Graphics g)
         {
-            if (n.state == State.None)
+            if (state == State.None)
             {
-                g.FillPolygon(Brushes.SandyBrown, n.figure);
+                g.FillPolygon(Brushes.SandyBrown, figure);
             }
 
             //SizeF Size = g.MeasureString(mineAreaNode.AroundMineCount.ToString(), font);

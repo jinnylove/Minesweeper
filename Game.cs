@@ -94,6 +94,38 @@ namespace Minesweeper
         public static float SUBWIDTH = 1F / 12;
         public static PointF OFFSET = new PointF(2 * SUBWIDTH, 2 * SUBWIDTH);
         public abstract bool right { get; }
+
+        public static AbstractNode nwFind(AbstractNode[,] matrix, PointF site)
+        {
+            int rowMin = 0, columeMin = 0;
+            PointF c0 = matrix[0, 0].center;
+            PointF cc = matrix[0, 1].center;
+            PointF cr = matrix[1, 0].center;
+            float dxc = cc.X - c0.X;
+            float dyc = cc.Y - c0.Y;
+            float dxr = cr.X - c0.X;
+            float dyr = cr.Y - c0.Y;
+            float dxs = site.X - c0.X;
+            float dys = site.Y - c0.Y;
+            float det = dxr * dyc - dyr * dxc;
+            float rowf = (dxs * dyc - dys * dxc) / det;
+            float columef = (dxr * dys - dyr * dxs) / det;
+            float distance2Min = float.MaxValue;
+            for (int row = (int)Math.Floor(rowf); row <= Math.Ceiling(rowf); row++)
+            {
+                for (int colume = (int)Math.Floor(columef); colume <= Math.Ceiling(columef); colume++)
+                {
+                    float distance2 = (matrix[row, colume].center.X - site.X).pow2() + (matrix[row, colume].center.Y - site.Y).pow2();
+                    if (distance2 < distance2Min)
+                    {
+                        distance2Min = distance2;
+                        rowMin = row;
+                        columeMin = colume;
+                    }
+                }
+            }
+            return matrix[rowMin, columeMin];
+        }
         
         public static PointF nwGet(AbstractNode[,] arr)
         {
@@ -320,6 +352,10 @@ namespace Minesweeper
                     new SolidBrush(Color.Black),
                     new SolidBrush(Color.DarkGray)
         };
+        public static  float pow2(this float d)
+        {
+            return d * d;
+        }
     }
 
 }

@@ -17,7 +17,7 @@ namespace Minesweeper
         private void Form_Main_Paint()
         {
             Graphics g = CreateGraphics();
-            game.PaintTo(g);
+            game.OnPaint(g);
             g.Dispose();
         }
 
